@@ -1,5 +1,7 @@
 package br.com.londrisoft.uniqueweb.endpoint;
 
+import br.com.londrisoft.uniqueweb.model.entity.Usuario;
+import br.com.londrisoft.uniqueweb.model.entity.folha.Funcionario;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,4 +55,11 @@ public class ListaEndpoint {
         return ResponseEntity.ok("Não implementado.");
     }
 
+
+    @GetMapping("/example")
+    public ResponseEntity<?> getExample() {
+        Usuario usuario = new Usuario();
+
+        return null;
+    }
 }

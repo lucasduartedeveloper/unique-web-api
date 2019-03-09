@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import static br.com.londrisoft.configuracaoapi.security.SecurityConstants.CHAVE_SECRETA;
-import static br.com.londrisoft.configuracaoapi.security.SecurityConstants.TEMPO_EXPIRACAO;
+import static br.com.londrisoft.uniqueweb.security.SecurityConstants.CHAVE_SECRETA;
+import static br.com.londrisoft.uniqueweb.security.SecurityConstants.TEMPO_EXPIRACAO;
 
 /**
  * @author Lucas Duarte for X-Brain in 07/11/18

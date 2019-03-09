@@ -44,4 +44,9 @@ public class Funcionario {
     private String estadoCivil; // enum
     private String conjuge;
     private String conjugeNaturalizado; // enum
+
+    private Documentacao documentacao;
+    private Endereco endereco;
+    private Contrato contrato;
+    private EscalaHorario escalaHorario;
 }
