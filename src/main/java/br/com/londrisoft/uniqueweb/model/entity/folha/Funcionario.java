@@ -1,4 +1,6 @@
-package br.com.londrisoft.uniqueweb.model.entity.funcionario;
+package br.com.londrisoft.uniqueweb.model.entity.folha;
+
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
+@Data
 @Entity
 public class Funcionario {
 
@@ -41,7 +44,4 @@ public class Funcionario {
     private String estadoCivil; // enum
     private String conjuge;
     private String conjugeNaturalizado; // enum
-
-
-
 }

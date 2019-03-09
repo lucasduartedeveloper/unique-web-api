@@ -1,4 +1,6 @@
-package br.com.londrisoft.uniqueweb.model.entity.funcionario;
+package br.com.londrisoft.uniqueweb.model.entity.folha;
+
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+@Data
 @Entity
 public class Contrato {
 

@@ -1,10 +1,13 @@
-package br.com.londrisoft.uniqueweb.model.entity.funcionario;
+package br.com.londrisoft.uniqueweb.model.entity.folha;
+
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Data
 @Entity
 public class Endereco {
 
@@ -18,5 +21,4 @@ public class Endereco {
     private String bairro;
     private String logradouro;
     private String numero;
-
 }
