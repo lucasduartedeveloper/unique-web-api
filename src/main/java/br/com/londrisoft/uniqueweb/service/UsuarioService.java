@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuarioService {
 
-    public AcessoDTO logado() {
+    public AcessoDTO perfil() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return (AcessoDTO) auth.getDetails();
     }
