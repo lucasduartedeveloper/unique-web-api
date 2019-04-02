@@ -1,6 +1,9 @@
 package br.com.londrisoft.uniqueweb.security;
 
-import br.com.londrisoft.uniqueweb.model.entity.Usuario;
+import br.com.londrisoft.uniqueweb.model.dto.AcessoDTO;
+import br.com.londrisoft.uniqueweb.model.entity.common.Empresa;
+import br.com.londrisoft.uniqueweb.model.entity.common.Usuario;
+import br.com.londrisoft.uniqueweb.repository.EmpresaRepository;
 import br.com.londrisoft.uniqueweb.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,14 +29,25 @@ public class JwtAuthenticationProvider {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Authentication fromToken(String token) throws UsernameNotFoundException {
-        String email = tokenProvider.getSubject(token);
-        Usuario usuario = Optional.ofNullable(usuarioRepository.findByEmail(email)).orElse(null);
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
-        if (usuario != null) {
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha(), getAuthorities(usuario));
-            authenticationToken.setDetails(usuario);
-            return authenticationToken;
+    public Authentication fromToken(String token) throws UsernameNotFoundException {
+        String[] subject = tokenProvider.getSubject(token).split("\\|");
+
+        if (subject.length == 2) {
+            Usuario usuario = usuarioRepository.findById(Long.parseLong(subject[0])).orElse(null);
+            Empresa empresa = empresaRepository.findById(Long.parseLong(subject[1])).orElse(null);
+
+            if (usuario != null) {
+                AcessoDTO acesso = new AcessoDTO();
+                acesso.setUsuario(usuario);
+                acesso.setEmpresa(empresa);
+
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha(), getAuthorities(usuario));
+                authenticationToken.setDetails(acesso);
+                return authenticationToken;
+            }
         }
         return null;
     }

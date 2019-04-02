@@ -1,11 +1,10 @@
 package br.com.londrisoft.uniqueweb.model.entity.folha;
 
+import br.com.londrisoft.uniqueweb.model.entity.common.Endereco;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -16,37 +15,64 @@ public class Funcionario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
-    private String apelido;
-    private String email;
-    private Date dataNascimento;
+    @JsonIgnore
+    private Long empresaId;
 
-    private String nacionalidade; // enum
-    private String naturalidade; // enum
-    private String estadoNascimento; // enum
+    @Column(length = 100)
+    private String nome;
+
+    @Column(length = 100)
+    private String apelido;
+
+    @Column(length = 200)
+    private String email;
+
+    private Date dataNascimento;
+    private Integer nacionalidade;
+
+    @Column(length = 1)
+    private String naturalizado; // S, N
+
+    @Column(length = 2)
+    private String estadoNascimento;
+    @Column(length = 200)
     private String cidadeNascimento;
 
+    @Column(length = 10)
     private String telefoneResidencial;
+    @Column(length = 11)
     private String telefoneCelular;
 
-    private String racaCor; // enum
-    private String deficiente; // enum
-    private String tipoDeficiencia; // enum
+    private Integer racaCor;
+
+    @Column(length = 1)
+    private String deficiente; // S, N
+    private Integer tipoDeficiencia;
 
     private String nomePai;
-    private String nacionalidadePai; // enum
+    private Integer nacionalidadePai;
 
     private String nomeMae;
-    private String nacionalidadeMae; // enum
+    private Integer nacionalidadeMae;
 
-    private String escolaridade; // enum
-    private String sexo; // enum
-    private String estadoCivil; // enum
+    private Integer escolaridade;
+
+    @Column(length = 1)
+    private String sexo; // M, F
+    private Integer estadoCivil;
+
+    @Column(length = 100)
     private String conjuge;
-    private String conjugeNaturalizado; // enum
 
+    @Column(length = 1)
+    private String conjugeNaturalizado; // S, N
+
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private Documentacao documentacao;
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private Endereco endereco;
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private Contrato contrato;
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private EscalaHorario escalaHorario;
 }

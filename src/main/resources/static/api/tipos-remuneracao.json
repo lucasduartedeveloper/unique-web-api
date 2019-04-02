@@ -1,0 +1,15 @@
+[
+  { "id": "1", "descricao": "Mensalista" },
+  { "id": "2", "descricao": "Quinzenal" },
+  { "id": "3", "descricao": "Semanal" },
+  { "id": "4", "descricao": "Diário" },
+  { "id": "5", "descricao": "Horário" },
+  { "id": "6", "descricao": "Tarefa/Doméstica" },
+  { "id": "7", "descricao": "Outros - (Comissionado)" },
+  { "id": "8", "descricao": "Pro-Labore" },
+  { "id": "9", "descricao": "Autônomo" },
+  { "id": "10", "descricao": "Menor Aprendiz" },
+  { "id": "11", "descricao": "Trabalho Intermitente" },
+  { "id": "12", "descricao": "Teletrabalho" },
+  { "id": "13", "descricao": "Trabalho Parcial" }
+]

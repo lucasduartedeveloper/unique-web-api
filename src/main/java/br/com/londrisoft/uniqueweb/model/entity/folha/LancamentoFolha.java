@@ -6,19 +6,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 
 @Data
 @Entity
-public class Endereco {
+public class LancamentoFolha {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String estado; // enum
-    private String cidade;
-    private String cep;
-    private String bairro;
-    private String logradouro;
-    private String numero;
+    private Long funcionarioId;
+    private Integer mes;
+    private Integer ano;
+
+    private BigDecimal quantidade;
+    private BigDecimal valor;
+
 }

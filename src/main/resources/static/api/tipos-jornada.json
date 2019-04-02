@@ -1,0 +1,6 @@
+[
+  { "id": "1", "descricao": "Jornada com horário diário e folga fixos" },
+  { "id": "2", "descricao": "Jornada 12 x 36" },
+  { "id": "3", "descricao": "Jornada com horário diário fixo e folga variável" },
+  { "id": "9", "descricao": "Demais tipos de jornada" }
+]

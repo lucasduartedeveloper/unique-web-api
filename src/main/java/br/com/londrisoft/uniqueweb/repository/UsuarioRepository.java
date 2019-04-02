@@ -1,6 +1,6 @@
 package br.com.londrisoft.uniqueweb.repository;
 
-import br.com.londrisoft.uniqueweb.model.entity.Usuario;
+import br.com.londrisoft.uniqueweb.model.entity.common.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

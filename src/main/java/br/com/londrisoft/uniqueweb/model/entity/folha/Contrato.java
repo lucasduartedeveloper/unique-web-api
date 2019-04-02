@@ -1,11 +1,9 @@
 package br.com.londrisoft.uniqueweb.model.entity.folha;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -17,20 +15,24 @@ public class Contrato {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "Brazil/East")
     private Date dataAdmissao;
-    private String cbo; // enum
+
+    @Column(length = 20)
+    private String cbo;
 
     private String funcao;
     private Integer horasMensais;
     private Integer horasSemanais;
 
-    private String tipoRemuneracao; // enum
+    private Integer tipoRemuneracao;
     private BigDecimal salarioContratual;
 
-    private String tipoJornada;
+    private Integer tipoJornada;
     private Integer diasExperiencia;
     private Integer diasProrrogacaoExperiencia;
 
     private String seguroDesempregoAdmissao;
-    private String contribuicaoSindical;
+    private Integer contribuicaoSindical;
+
 }

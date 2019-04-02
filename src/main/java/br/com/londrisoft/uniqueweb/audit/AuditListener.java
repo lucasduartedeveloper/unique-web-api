@@ -1,6 +1,6 @@
 package br.com.londrisoft.uniqueweb.audit;
 
-import br.com.londrisoft.uniqueweb.model.entity.Usuario;
+import br.com.londrisoft.uniqueweb.model.entity.common.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

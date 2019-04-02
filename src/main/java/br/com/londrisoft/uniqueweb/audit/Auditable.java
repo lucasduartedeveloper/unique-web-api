@@ -1,6 +1,6 @@
 package br.com.londrisoft.uniqueweb.audit;
 
-import br.com.londrisoft.uniqueweb.model.entity.Usuario;
+import br.com.londrisoft.uniqueweb.model.entity.common.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
