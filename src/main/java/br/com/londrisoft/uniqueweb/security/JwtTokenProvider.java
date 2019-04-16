@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static br.com.londrisoft.uniqueweb.security.SecurityConstants.CHAVE_SECRETA;
@@ -22,6 +23,10 @@ public class JwtTokenProvider {
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + TEMPO_EXPIRACAO);
+
+        //Calendar cal = Calendar.getInstance();
+        //cal.set(2022,1,1);
+        //expiryDate = cal.getTime();
 
         return Jwts.builder()
                 .setSubject(email)
@@ -45,15 +50,15 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(CHAVE_SECRETA).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
-            logger.error("Invalid JWT signature");
+            //logger.error("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
-            logger.error("Invalid JWT token");
+            //logger.error("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
-            logger.error("Expired JWT token");
+            //logger.error("Expired JWT token");
         } catch (UnsupportedJwtException ex) {
-            logger.error("Unsupported JWT token");
+            //logger.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
-            logger.error("JWT claims string is empty.");
+            //logger.error("JWT claims string is empty.");
         }
         return false;
     }

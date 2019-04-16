@@ -1,10 +1,8 @@
 package br.com.londrisoft.uniqueweb.model.entity.folha;
 
 import lombok.Data;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -13,9 +11,12 @@ public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long uniqueId;
+    private Long empresaId;
 
-    private String tipo; // M, A
+    private String nsu;
+
+    @Column(length = 1)
+    private String tipo; // P, D
     private String descricao;
 
 }

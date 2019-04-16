@@ -1,5 +1,6 @@
 package br.com.londrisoft.uniqueweb.endpoint;
 
+import br.com.londrisoft.uniqueweb.model.dto.AcessoDTO;
 import br.com.londrisoft.uniqueweb.model.dto.request.LoginRequest;
 import br.com.londrisoft.uniqueweb.model.dto.response.ApiResponse;
 import br.com.londrisoft.uniqueweb.model.dto.response.LoginResponse;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@SuppressWarnings("Duplicates")
 @RestController
 @RequestMapping("/api")
 public class AcessoEndpoint {
@@ -27,20 +29,33 @@ public class AcessoEndpoint {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<?> entrar(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         Usuario usuario = usuarioRepository.findByEmail(request.getLogin());
         if (usuario == null) {
-            return ResponseEntity.ok(new ApiResponse(false, "Usuário não encontrado."));
+            return new ResponseEntity<>(new ApiResponse(false, "Usuário inexistente."), HttpStatus.NOT_FOUND);
         }
-        else if (!StringUtil.passwordEncoder().matches(request.getSenha(), usuario.getSenha())) {
-            return ResponseEntity.ok(new ApiResponse(false, "Senha incorreta."));
+
+        // Verifica se a senha esta correta
+        if (!StringUtil.passwordEncoder().matches(request.getSenha(), usuario.getSenha())) {
+            return new ResponseEntity<>(new ApiResponse(false, "Senha incorreta."), HttpStatus.NOT_FOUND);
         }
-        String accessToken = tokenProvider.generateToken(usuario.getId().toString()+"|0");
-        return ResponseEntity.ok(new ApiResponse(new LoginResponse(accessToken, usuario)));
+
+        // Bloquear acesso de usuário inativo
+        if (usuario.getSituacao() != Usuario.Situacao.ATIVO) {
+            return new ResponseEntity<>(new ApiResponse(false, "Usuário inativo."), HttpStatus.FORBIDDEN);
+        }
+
+        // Gera um token de acesso para esse usuário
+        String accessToken = tokenProvider.generateToken(usuario.getId() + "|0");
+        return new ResponseEntity<>(new ApiResponse(new LoginResponse(accessToken)), HttpStatus.OK);
     }
 
     @GetMapping("/perfil")
     public ResponseEntity<?> perfil() {
-        return new ResponseEntity<>(usuarioService.perfil(), HttpStatus.OK);
+        AcessoDTO acesso = usuarioService.acesso();
+        if (acesso == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "Falha na autenticação."), HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(new ApiResponse(acesso), HttpStatus.OK);
     }
 }

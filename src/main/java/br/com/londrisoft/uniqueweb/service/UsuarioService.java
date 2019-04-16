@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuarioService {
 
-    public AcessoDTO perfil() {
+    public AcessoDTO acesso() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return (AcessoDTO) auth.getDetails();
+        if (auth.getDetails().getClass().getName().contains("AcessoDTO")) {
+            return (AcessoDTO) auth.getDetails();
+        }
+        else return null;
     }
 
 }

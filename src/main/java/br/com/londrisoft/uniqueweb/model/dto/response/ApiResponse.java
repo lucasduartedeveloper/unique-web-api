@@ -18,7 +18,13 @@ public class ApiResponse {
 
     public ApiResponse(Object data) {
         this.success = true;
-        this.message = "No message available.";
+        this.message = null;
+        this.data = data;
+    }
+
+    public ApiResponse(String message, Object data) {
+        this.success = true;
+        this.message = message;
         this.data = data;
     }
 

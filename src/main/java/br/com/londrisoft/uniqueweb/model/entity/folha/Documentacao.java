@@ -1,5 +1,6 @@
 package br.com.londrisoft.uniqueweb.model.entity.folha;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.annotations.CollectionId;
 
@@ -25,6 +26,7 @@ public class Documentacao {
 
     @Column(length = 10)
     private String orgaoRg;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "Brazil/East")
     private Date dataEmissaoRg;
 
     @Column(length = 20)
@@ -35,10 +37,12 @@ public class Documentacao {
 
     @Column(length = 20)
     private String numeroPis;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "Brazil/East")
     private Date dataEmissaoPis;
 
     @Column(length = 20)
     private String tituloEleitor;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "Brazil/East")
     private Date dataEmissaoSecaoEleitoral;
 
     @Column(length = 10)
@@ -53,7 +57,9 @@ public class Documentacao {
     @Column(length = 2)
     private String estadoCnh; // enum
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "Brazil/East")
     private Date dataEmissaoCnh;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "Brazil/East")
     private Date dataVencimentoCnh;
 
     @Column(length = 20)

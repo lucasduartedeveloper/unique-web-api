@@ -1,0 +1,14 @@
+[
+  { "id": "1", "descricao": "Analfabeto" },
+  { "id": "2", "descricao": "1o. incompleto" },
+  { "id": "3", "descricao": "1o. completo" },
+  { "id": "4", "descricao": "Colegial incompleto" },
+  { "id": "5", "descricao": "Colegial completo" },
+  { "id": "6", "descricao": "Ginasio incompleto" },
+  { "id": "7", "descricao": "Ginasio completo" },
+  { "id": "8", "descricao": "Superior incompleto" },
+  { "id": "9", "descricao": "Superior completo" },
+  { "id": "10", "descricao": "Mestrado completo" },
+  { "id": "11", "descricao": "Doutorado completo" },
+  { "id": "12", "descricao": "Pós-graduação completa" }
+]

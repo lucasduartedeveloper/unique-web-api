@@ -36,18 +36,28 @@ public class JwtAuthenticationProvider {
         String[] subject = tokenProvider.getSubject(token).split("\\|");
 
         if (subject.length == 2) {
-            Usuario usuario = usuarioRepository.findById(Long.parseLong(subject[0])).orElse(null);
-            Empresa empresa = empresaRepository.findById(Long.parseLong(subject[1])).orElse(null);
+            Long usuarioId = Long.parseLong(subject[0]);
+            Long empresaId = Long.parseLong(subject[1]);
 
-            if (usuario != null) {
-                AcessoDTO acesso = new AcessoDTO();
-                acesso.setUsuario(usuario);
-                acesso.setEmpresa(empresa);
-
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha(), getAuthorities(usuario));
-                authenticationToken.setDetails(acesso);
-                return authenticationToken;
+            Usuario usuario = null;
+            Empresa empresa = empresaRepository.findById(empresaId).orElse(null);
+            if (usuarioId == 0l) {
+                usuario = new Usuario();
+                usuario.setId(0l);
+                usuario.setEmpresaId(0l);
+                usuario.setNome("MASTER");
             }
+            else {
+                usuario = usuarioRepository.findById(usuarioId).orElse(null);
+            }
+
+            AcessoDTO acesso = new AcessoDTO();
+            acesso.setUsuario(usuario);
+            acesso.setEmpresa(empresa);
+
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha(), getAuthorities(usuario));
+            authenticationToken.setDetails(acesso);
+            return authenticationToken;
         }
         return null;
     }

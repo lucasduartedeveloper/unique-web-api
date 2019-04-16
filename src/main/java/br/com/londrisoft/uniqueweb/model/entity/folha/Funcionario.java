@@ -1,6 +1,7 @@
 package br.com.londrisoft.uniqueweb.model.entity.folha;
 
 import br.com.londrisoft.uniqueweb.model.entity.common.Endereco;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -18,6 +19,8 @@ public class Funcionario {
     @JsonIgnore
     private Long empresaId;
 
+    private String nsu;
+
     @Column(length = 100)
     private String nome;
 
@@ -27,6 +30,7 @@ public class Funcionario {
     @Column(length = 200)
     private String email;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "Brazil/East")
     private Date dataNascimento;
     private Integer nacionalidade;
 
@@ -74,5 +78,5 @@ public class Funcionario {
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private Contrato contrato;
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
-    private EscalaHorario escalaHorario;
+    private Escala escala;
 }

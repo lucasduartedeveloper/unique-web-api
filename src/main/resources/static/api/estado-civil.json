@@ -1,0 +1,8 @@
+[
+  { "id": "0", "descricao": "Não informado" },
+  { "id": "1", "descricao": "Solteiro" },
+  { "id": "2", "descricao": "Casado" },
+  { "id": "3", "descricao": "Viúvo" },
+  { "id": "4", "descricao": "Desquitado" },
+  { "id": "5", "descricao": "Divorciado" }
+]

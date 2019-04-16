@@ -1,5 +1,6 @@
 package br.com.londrisoft.uniqueweb.model.entity.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,6 +21,9 @@ public class Endereco {
 
     @Column(length = 200)
     private String cidade;
+
+    @Column(length = 20)
+    private String codigoCidade;
 
     @Column(length = 200)
     private String bairro;

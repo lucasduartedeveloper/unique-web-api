@@ -1,19 +1,36 @@
 package br.com.londrisoft.uniqueweb.model.entity.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Empresa {
+
+    public enum Tipo {
+
+        ESCRITORIO,
+        EMPRESA
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nsu;
+
+    private Tipo tipo; // Escritório, Empresa
+
+    @JsonIgnore
+    private Long escritorioId;
+
     @Column(length = 200)
-    private String rezaoSocial;
+    private String razaoSocial;
 
     @Column(length = 200)
     private String nomeFantasia;
@@ -35,5 +52,8 @@ public class Empresa {
 
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private Endereco endereco;
+
+    @Transient
+    private String accessToken;
 
 }

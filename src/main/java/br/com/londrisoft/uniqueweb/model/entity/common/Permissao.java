@@ -7,18 +7,20 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Arquivo {
+public class Permissao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
+    @Transient
+    private String empresaNsu;
+
     @JsonIgnore
+    private Long usuarioId;
     private Long empresaId;
+    private Boolean temAcesso;
 
-    private String nome;
 
-    @Lob
-    private byte[] conteudo;
 }
-
