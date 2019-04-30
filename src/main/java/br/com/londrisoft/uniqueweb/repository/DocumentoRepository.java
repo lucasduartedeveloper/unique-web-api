@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DocumentoRepository extends JpaRepository<Documento, Long> {
 
-    @Query("select d from Documento d where d.empresaId = :empresaId and d.categoria = :categoria")
-    List<Documento> findByCategoria(@Param("empresaId") Long empresaId, @Param("categoria") Documento.Categoria categoria);
+    @Query("select d from Documento d where d.empresaId = :empresaId")
+    List<Documento> findByEmpresaId(@Param("empresaId") Long empresaId);
 
 }

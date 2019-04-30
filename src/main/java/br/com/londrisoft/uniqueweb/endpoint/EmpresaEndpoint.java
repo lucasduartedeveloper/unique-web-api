@@ -49,8 +49,8 @@ public class EmpresaEndpoint {
 
         for (Empresa empresa : empresas) {
             String subject = usuarioService.acesso().getUsuario().getId() + "|" + empresa.getId();
-            String acessToken = tokenProvider.generateToken(subject);
-            empresa.setAccessToken(acessToken);
+            String accessToken = tokenProvider.generateToken(subject);
+            empresa.setAccessToken(accessToken);
         }
 
         return new ResponseEntity<>(new ApiResponse(empresas), HttpStatus.OK);

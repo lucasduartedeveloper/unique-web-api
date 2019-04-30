@@ -13,13 +13,6 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Documento {
 
-    public enum Categoria {
-        EMPRESA,
-        FOLHA,
-        CONTABIL,
-        FISCAL
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,10 +20,10 @@ public class Documento {
     @JsonIgnore
     private Long empresaId;
 
+    private String diretorio;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Brazil/East")
     private Date dataEnvio = new Date();
-
-    private Categoria categoria;
 
     @JsonIgnore
     private Long arquivoId;

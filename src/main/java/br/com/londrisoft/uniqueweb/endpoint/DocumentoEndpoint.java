@@ -29,14 +29,14 @@ public class DocumentoEndpoint {
     private ArquivoRepository arquivoRepository;
 
     @GetMapping
-    public ResponseEntity<?> listar(@RequestParam("categoria") Documento.Categoria categoria) {
+    public ResponseEntity<?> listar() {
         AcessoDTO acesso = usuarioService.acesso();
         // Alerta que não foi selecionada nenhuma empresa antes de realizar o envio do documento
         if (acesso.getEmpresa() == null) {
             return new ResponseEntity<>(new ApiResponse(false,"Não há empresa selecionada."), HttpStatus.BAD_REQUEST);
         }
 
-        List<Documento> documentos = documentoRepository.findByCategoria(acesso.getEmpresa().getId(), categoria);
+        List<Documento> documentos = documentoRepository.findByEmpresaId(acesso.getEmpresa().getId());
         return ResponseEntity.ok()
                 .body(new ApiResponse(documentos));
     }
@@ -73,8 +73,20 @@ public class DocumentoEndpoint {
         Arquivo arquivo = arquivoRepository.findById(id).orElse(null);
         byte[] data = arquivo != null ? arquivo.getConteudo() : null;
 
+        String[] split = arquivo.getNome().split("\\.");
+        String extensao = split[split.length -1].toUpperCase()  ;
+        String contentType = "";
+
+        switch (extensao) {
+            case "JPG":
+                contentType = "image/jpeg";
+                break;
+            case "PDF":
+                contentType = "application/pdf";
+        }
+
         return ResponseEntity.ok()
-                .header("Content-Type", "application/pdf")
+                .header("Content-Type", contentType)
                 .body(data);
     }
 

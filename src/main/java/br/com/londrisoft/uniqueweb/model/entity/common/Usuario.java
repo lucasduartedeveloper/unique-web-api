@@ -56,6 +56,8 @@ public class Usuario {
     @Column(length = 100)
     private String senha;
 
+    private Boolean senhaProvisoria = false;
+
     private Situacao situacao; // Ativo, Inativo
 
     private Perfil perfil; // Londrisoft, Escritorio, Empresa, Sindico, Portaria, Condômino
