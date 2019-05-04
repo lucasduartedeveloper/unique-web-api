@@ -49,15 +49,9 @@ public class DocumentoEndpoint {
             return new ResponseEntity<>(new ApiResponse(false,"Não há empresa selecionada."), HttpStatus.BAD_REQUEST);
         }
 
-        // Limita o tipo de arquivo enviado
-        if (!request.getArquivoNome().contains(".pdf")) {
-            return new ResponseEntity<>(new ApiResponse(false,"Somente arquivos PDF podem ser enviados."), HttpStatus.BAD_REQUEST);
-        }
-
         Arquivo arquivo = new Arquivo();
         arquivo.setEmpresaId(acesso.getEmpresa().getId());
         arquivo.setConteudo(Base64.getDecoder().decode(request.getConteudo()));
-        arquivo.setNome(request.getArquivoNome());
 
         arquivo = arquivoRepository.save(arquivo);
         request.setArquivoId(arquivo.getId());
@@ -68,25 +62,61 @@ public class DocumentoEndpoint {
         return new ResponseEntity<>(new ApiResponse("Arquivo enviado com sucesso.", documento), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> remover(@PathVariable Long id) {
+        AcessoDTO acesso = usuarioService.acesso();
+        if (acesso.getEmpresa() == null) {
+            return new ResponseEntity<>(new ApiResponse(false,"Não há empresa selecionada."), HttpStatus.BAD_REQUEST);
+        }
+
+        Documento documento = documentoRepository.findById(id).orElse(null);
+        if (documento == null || !documento.getEmpresaId().equals(acesso.getEmpresa().getId())) {
+            return new ResponseEntity<>(new ApiResponse(false, "Arquivo não encontrado."), HttpStatus.NOT_FOUND);
+        }
+
+        arquivoRepository.deleteById(documento.getArquivoId());
+        documentoRepository.deleteById(id);
+        return new ResponseEntity<>(new ApiResponse(true, "Arquivo removido com sucesso."), HttpStatus.OK);
+    }
+
     @GetMapping("/download/{id}")
     public ResponseEntity<?> download(@PathVariable Long id) {
-        Arquivo arquivo = arquivoRepository.findById(id).orElse(null);
+        Documento documento = documentoRepository.findById(id).orElse(null);
+        if (documento == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Atualizar quantidade de Downloads
+        Integer quantidadeDownload = documento.getQuantidadeDownload();
+        documento.setQuantidadeDownload(quantidadeDownload +1);
+        documentoRepository.save(documento);
+
+        // Buscar o conteúdo do arquivo
+        Arquivo arquivo = arquivoRepository.findById(documento.getArquivoId()).orElse(null);
         byte[] data = arquivo != null ? arquivo.getConteudo() : null;
 
-        String[] split = arquivo.getNome().split("\\.");
+        String[] split = documento.getArquivoNome().split("\\.");
         String extensao = split[split.length -1].toUpperCase()  ;
         String contentType = "";
+        String contentDisposition = "filename=\"" + documento.getArquivoNome() + "\"";
 
         switch (extensao) {
             case "JPG":
                 contentType = "image/jpeg";
                 break;
+            case "PNG":
+                contentType = "image/png";
+                break;
             case "PDF":
                 contentType = "application/pdf";
+                break;
+            default:
+                contentType = "application/octet-stream";
         }
 
         return ResponseEntity.ok()
                 .header("Content-Type", contentType)
+                .header("Content-Disposition", contentDisposition)
                 .body(data);
     }
 

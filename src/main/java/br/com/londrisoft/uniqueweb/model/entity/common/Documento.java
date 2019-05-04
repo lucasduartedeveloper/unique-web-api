@@ -34,6 +34,8 @@ public class Documento {
     @Transient
     private String conteudo;
 
+    private Integer quantidadeDownload = 0;
+
     public String getLinkDownload() {
         return "http://teste-londrisoft.orienta.com.br:5000/api/documentos/download/" + arquivoId;
     }

@@ -16,6 +16,12 @@ public class ApiResponse {
     private String message;
     private Object data;
 
+    public ApiResponse(String message) {
+        this.success = true;
+        this.message = message;
+        this.data = null;
+    }
+
     public ApiResponse(Object data) {
         this.success = true;
         this.message = null;

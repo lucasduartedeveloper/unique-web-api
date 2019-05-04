@@ -16,8 +16,6 @@ public class Arquivo {
     @JsonIgnore
     private Long empresaId;
 
-    private String nome;
-
     @Lob
     private byte[] conteudo;
 }
